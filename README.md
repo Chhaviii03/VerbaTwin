@@ -1,60 +1,103 @@
-# RESTful API For Similarity Check Using Natural Language Processing and Docker Compose
+# VerbaTwin: Semantic Similarity API
 
-## INTRODUCTION
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
-- Build a Similarity check API using NLP, run and deploy using Docker & Docker-compose. 
+VerbaTwin is a deployable NLP service designed to calculate the semantic similarity between two pieces of text. It is built with a modern Python stack and fully containerized with Docker for seamless setup and deployment.
 
------------------
+## ✨ Key Features
 
-### Documents similarity
-Document similarity (or distance between documents) is a one of the central themes in Information Retrieval. How humans usually define how similar are documents? Usually documents treated as similar if they are semantically close and describe similar concepts. On other hand “similarity” can be used in context of duplicate detection. We will review several common approaches.
+-   **Semantic Similarity Scoring**: Leverages spaCy's powerful word vectors to determine how closely related two texts are in meaning.
+-   **RESTful API**: Exposes a clean and simple API endpoint for easy integration into other applications.
+-   **Dockerized Environment**: Uses Docker and Docker Compose to containerize the entire stack (Flask API, spaCy model, MongoDB) for one-command setup.
+-   **User Management**: Includes basic endpoints for user registration and API token management, backed by a MongoDB database.
 
-![imageSimilarity](https://miro.medium.com/max/1838/1*l-BZLW3JUHd1MZbNq1MjQA.png)
+## 🛠️ Tech Stack
 
------------------------
+-   **Backend**: Python, Flask, spaCy
+-   **Database**: MongoDB
+-   **Deployment**: Docker, Docker Compose
 
-#### OBJECTIVE
+## 🚀 Getting Started
 
-`The objective of this API is to handle Similarity of text (PLAGIARISM CHECK) `
+Follow these instructions to get the project running on your local machine.
 
-## API ARCHITECTURE
-|RESOURCES |URL(PATH) |METHOD |PARAMETERS |STATUSCODE|
-|----------|-------|--------|--------------|----------|
-|Register a user | /register | POST | username, password | 200:OK,  301:INVALID USERNAME |
-|Detect Similarity of docs | /detect | POST | username, password , text1 & text2 |200:OK RETURN SIMILARITY ,   301:INVALID USERNAME,    302:INVALID PASSWORD,    303:OUT OF TOKENS
-|Refill | /refill | POST | username,  admin_pw,  refill_amount |  200:OK,  301:INVALID USERNAME , 304:INVALID ADMIN_PW
+### Prerequisites
 
-------------------
+-   [Git](https://git-scm.com/)
+-   [Docker](https://www.docker.com/products/docker-desktop/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
+### Installation & Setup
 
-## REQUIREMENTS
+You can set up and run the entire application using the single command block below. Just copy and paste it into your terminal.
 
-- [spacy.io](https://spacy.io/models/en) is  an open-source software library for advanced Natural Language Processing, written in the programming languages Python, it is very easy python processing module. 
+Platforms like GitHub will automatically add a copy button to the top-right corner of the code block for convenience.
 
-**Download the spacy model from [here](https://github.com/explosion/spacy-models/releases//tag/en_core_web_sm-2.1.0)**
+```bash
+1. Clone the repository and navigate into the directory
+git clone [https://github.com/Chhaviii03/VerbaTwin.git](https://github.com/Chhaviii03/VerbaTwin.git)
+cd VerbaTwin
 
-- Flask framework, see how to install and run the flask framework [here](https://github.com/pallets/flask) , for more [details](https://www.fullstackpython.com/flask.html)
+# 2. Create the environment file from the example
+# (You can modify the .env file later if needed)
+cp .env.example .env
 
-- pymongo, PyMongo is a Python distribution containing tools for working with MongoDB download and install pymongo from [here](https://api.mongodb.com/python/current/)
+# 3. Build and run the application with Docker Compose
+# (This may take a few minutes on the first run as it downloads and builds the images)
+docker-compose up --build
+Your VerbaTwin API will now be running and available at http://localhost:5000.
+```
 
-- [Docker](https://www.docker.com/)
+To stop the application, press Ctrl + C in the terminal. To run it in the background next time, you can use docker-compose up -d.
 
-- Docker-compose.yml
+⚙️ API Usage
+The following are the primary endpoints available.
 
------------------------
+Calculate Similarity
+Endpoint: POST /api/similarity
 
-## Contributing 
+Description: Calculates and returns the semantic similarity score between two texts.
 
- Please feel free to fork this package and contribute by submitting a pull request to enhance the functionalities.
- 
- -------------------
+Request Body:
+```bash
+JSON
 
-## How can I thank you?
+{
+  "text1": "The sun is shining brightly today.",
+  "text2": "It is a beautiful and sunny day."
+}
+```
 
-Why not star the github repo? I'd love the attention! Why not share the link for this repository on Twitter, Hackernews or Destructoid ? Spread the word! 
+Success Response (200 OK):
+```bash
+JSON
 
+{
+  "similarity_score": 0.93
+}
+```
 
-Thanks! Ore-Aruwaji Tola. 
+Register User (Example)
 
+Endpoint: POST /api/register
 
+Description: Registers a new user and returns an API token for future authenticated requests.
 
+Request Body:
+```bash
+JSON
+
+{
+  "username": "testuser",
+  "password": "strongpassword123"
+}
+```
+Success Response (201 Created):
+```bash
+JSON
+
+{
+  "message": "User registered successfully.",
+  "api_token": "your_generated_api_token_here"
+}
+```
