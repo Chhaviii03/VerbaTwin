@@ -1,7 +1,5 @@
 # VerbaTwin: Semantic Similarity API
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
 VerbaTwin is a deployable NLP service designed to calculate the semantic similarity between two pieces of text. It is built with a modern Python stack and fully containerized with Docker for seamless setup and deployment.
 
